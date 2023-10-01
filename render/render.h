@@ -6,10 +6,8 @@
 
 Point find_point_on_view_window(int pixelX, int pixelY, int maxX, int maxY, ViewWindow ViewWindow);
 
-long find_distance_with_sphere(Point camera, Vector vector, Sphere sphere);
+long find_distance_with_sphere(Point camera, Point vector, Sphere sphere);
 
-Point change_coordinates(Point p, Vector v);
-
-long scalar(Vector a, Vector b);
+long scalar(Point a, Point b);
 
 #endif

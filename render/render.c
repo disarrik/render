@@ -1,5 +1,6 @@
 #include "render.h"
 #include <math.h>
+#include <stdio.h>
 
 Point find_point_on_view_window(int pixelX, int pixelY, int maxX, int maxY, ViewWindow viewWindow)
 {
@@ -12,17 +13,16 @@ Point find_point_on_view_window(int pixelX, int pixelY, int maxX, int maxY, View
     return point;
 }
 
-long find_distance_with_sphere(Point camera, Vector vector, Sphere sphere)
+long find_distance_with_sphere(Point camera, Point vector, Sphere sphere)
 {
-    // вектор от камеры до центра сферы
-    Vector co;
-    co.a = camera.position;
-    co.b = sphere.center;
+    // todo как-будто камера всегда в центре коодинат
+    Point co;
+    co = sphere.center;
     long a = scalar(vector, vector);
     long b = 2 * scalar(co, vector);
     long c = scalar(co, co) - (sphere.radius * sphere.radius);
-
-    long discr = sqrt(b*b - 4*a*c) / (2*a);
+    long discr = b*b - 4*a*c;
+    printf("%d %d %d %d \n", a, b, c, discr);
     if (discr < 0) 
         return -1;
     else if (discr == 0) {
@@ -30,6 +30,7 @@ long find_distance_with_sphere(Point camera, Vector vector, Sphere sphere)
         if (result < 0) return -1; 
         return (-1 * b) / (2*a);
     }
+
     long t1 = (-1 * b + sqrt(discr)) / (2*a);
     long t2 = (-1 * b - sqrt(discr)) / (2*a);
     if (t1 < 0 && t2 < 0) return -1;
@@ -41,18 +42,7 @@ long find_distance_with_sphere(Point camera, Vector vector, Sphere sphere)
     return t2;
 }
 
-Point change_coordinates(Point p, Vector v)
+long scalar(Point a, Point b)
 {
-    Point newP;
-    newP.x = p.x + (v.b.x - v.a.x);
-    newP.y = p.y + (v.b.y - v.a.y);
-    newP.z = p.z + (v.b.z - v.a.z);
-    return newP;
-}
-
-long scalar(Vector a, Vector b)
-{
-    Point a_normalized = change_coordinates(a.b, a);
-    Point b_normalized = change_coordinates(b.b, b);
-    return a_normalized.x*b_normalized.x  + a_normalized.y*b_normalized.y + a_normalized.z*b_normalized.z;
+    return a.x*b.x  + a.y*b.y + a.z*b.z;
 }

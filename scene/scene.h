@@ -3,9 +3,9 @@
 
 typedef struct Point 
 {
-    long x;
-    long y;
-    long z;
+    long long x;
+    long long y;
+    long long z;
 } Point;
 
 typedef struct Color
@@ -18,12 +18,6 @@ typedef struct ColoredPoint
     Point point;
     Color color;
 } ColoredPoint;
-
-typedef struct Vector 
-{
-    Point a;
-    Point b;    
-} Vector;
 
 typedef struct ViewWindow 
 {

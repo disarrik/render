@@ -41,7 +41,7 @@ void close_window()
 
 void draw_point(int x, int y, short red, short green, short blue)
 {
-	unsigned long color = (red << 16) || (green << 16) || blue;
+	unsigned long color = (red << 16) | (green << 16) | blue;
 	XSetForeground(dpy, graphicsContext, color);
 	XDrawPoint(dpy, window, graphicsContext, x, y);
 }
