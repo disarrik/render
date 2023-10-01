@@ -6,8 +6,8 @@
 
 Point find_point_on_view_window(int pixelX, int pixelY, int maxX, int maxY, ViewWindow ViewWindow);
 
-long long find_distance_with_sphere(Point vector, Sphere sphere);
+double find_distance_with_sphere(Point vector, Sphere sphere);
 
-long long scalar(Point a, Point b);
+double scalar(Point a, Point b);
 
 #endif

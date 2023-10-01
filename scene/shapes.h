@@ -6,7 +6,7 @@
 typedef struct Sphere
 {
     Point center;
-    unsigned long radius;
+    double radius;
     Color color;
 } Sphere;
 

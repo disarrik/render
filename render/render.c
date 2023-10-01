@@ -14,13 +14,13 @@ Point negate(Point p)
 Point find_point_on_view_window(int pixelX, int pixelY, int maxX, int maxY, ViewWindow viewWindow)
 {
     Point point;
-    point.x = (viewWindow.width / maxX) + pixelX;
-    point.y = (viewWindow.height / maxY) + pixelY;
+    point.x = (viewWindow.width / maxX) * pixelX;
+    point.y = (viewWindow.height / maxY) * pixelY;
     point.z = viewWindow.center.z;
     return point;
 }
 
-long long find_distance_with_sphere(Point vector, Sphere sphere)
+double find_distance_with_sphere(Point vector, Sphere sphere)
 {
     Point co;
     co = negate(sphere.center);
@@ -32,7 +32,7 @@ long long find_distance_with_sphere(Point vector, Sphere sphere)
     if (discr < 0) 
         return -1;
     else if (discr == 0) {
-        long result = (-1 * b) / (2*a);
+        double result = (-1 * b) / (2*a);
         if (result < 0) return -1; 
         return (-1 * b) / (2*a);
     }
@@ -48,7 +48,7 @@ long long find_distance_with_sphere(Point vector, Sphere sphere)
     return t2;
 }
 
-long long scalar(Point a, Point b) 
+double scalar(Point a, Point b) 
 {
     return a.x*b.x + a.y*b.y + a.z*b.z;
 }

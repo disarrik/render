@@ -3,9 +3,9 @@
 
 typedef struct Point 
 {
-    long long x;
-    long long y;
-    long long z;
+    double x;
+    double y;
+    double z;
 } Point;
 
 typedef struct Color
@@ -22,8 +22,8 @@ typedef struct ColoredPoint
 typedef struct ViewWindow 
 {
     Point center;
-    unsigned long height;
-    unsigned long width;
+    double height;
+    double width;
 } ViewWindow;
 
 #endif

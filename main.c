@@ -14,15 +14,15 @@ void init_scene()
     Sphere sphere0;
     Point center0;
     Color color0;
-    center0.x = 0;
-    center0.y = -1;
-    center0.z = 3;
+    center0.x = 1;
+    center0.y = 1;
+    center0.z = 100000;
     color0.red = 255;
     color0.green = 0;
     color0.blue = 0;
     sphere0.color = color0;
     sphere0.center = center0;
-    sphere0.radius = 3;
+    sphere0.radius = 0.1;
     sphere = sphere0;
     camera.x = 0;
     camera.y = 0;
@@ -32,8 +32,8 @@ void init_scene()
     viewWindowCenter.y = 0;
     viewWindowCenter.z = 1;
     viewWindow.center = viewWindowCenter; 
-    viewWindow.height = 1;
-    viewWindow.width = 1;
+    viewWindow.height = 4;
+    viewWindow.width = 4;
 }
 
 int map_x(long x)
