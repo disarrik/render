@@ -22,6 +22,7 @@ void init_scene()
     color0.blue = 0;
     sphere0.color = color0;
     sphere0.center = center0;
+    sphere0.radius = 3;
     sphere = sphere0;
     camera.x = 0;
     camera.y = 0;
@@ -31,8 +32,8 @@ void init_scene()
     viewWindowCenter.y = 0;
     viewWindowCenter.z = 1;
     viewWindow.center = viewWindowCenter; 
-    viewWindow.height = 1000;
-    viewWindow.width = 1000;
+    viewWindow.height = 1;
+    viewWindow.width = 1;
 }
 
 int map_x(long x)
@@ -57,11 +58,11 @@ int main()
             foundColor.blue = 0;
             foundColor.green = 0;
             foundColor.red = 0;
-            unsigned long  minDistance = ULONG_MAX;
+            long long  minDistance = __LONG_LONG_MAX__;
             for (int s = 0; s < 1; s++)
             {
                 Point vector_to_point_on_window = find_point_on_view_window(i, j, WIDTH, HEIGHT, viewWindow);
-                long distance = find_distance_with_sphere(camera, vector_to_point_on_window, sphere);
+                long long  distance = find_distance_with_sphere(vector_to_point_on_window, sphere);
                 printf("%d \n", distance);
                 if (distance != -1 && distance < minDistance)
                 {
