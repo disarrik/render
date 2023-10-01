@@ -2,10 +2,17 @@
 #include <math.h>
 #include <stdio.h>
 
+Point negate(Point p)
+{
+    Point newP;
+    newP.x = -1 * p.x;
+    newP.y = -1 * p.y;
+    newP.z = -1 * p.z;
+    return newP;
+}
+
 Point find_point_on_view_window(int pixelX, int pixelY, int maxX, int maxY, ViewWindow viewWindow)
 {
-    // todo алгоритм не учитывает что экран может быть повернут
-    // надо сделать его более универсальным
     Point point;
     point.x = (viewWindow.width / maxX) + pixelX;
     point.y = (viewWindow.height / maxY) + pixelY;
@@ -15,9 +22,8 @@ Point find_point_on_view_window(int pixelX, int pixelY, int maxX, int maxY, View
 
 long long find_distance_with_sphere(Point vector, Sphere sphere)
 {
-    // todo как-будто камера всегда в центре коодинат
     Point co;
-    co = sphere.center;
+    co = negate(sphere.center);
     long a = scalar(vector, vector);
     long b = 2 * scalar(co, vector);
     long c = scalar(co, co) - (sphere.radius * sphere.radius);
