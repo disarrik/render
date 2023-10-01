@@ -24,10 +24,10 @@ double find_distance_with_sphere(Point vector, Sphere sphere)
 {
     Point co;
     co = negate(sphere.center);
-    long a = scalar(vector, vector);
-    long b = 2 * scalar(co, vector);
-    long c = scalar(co, co) - (sphere.radius * sphere.radius);
-    long discr = b*b - 4*a*c;
+    double a = scalar(vector, vector);
+    double b = 2 * scalar(co, vector);
+    double c = scalar(co, co) - (sphere.radius * sphere.radius);
+    double discr = b*b - 4*a*c;
     printf("%d %d %d %d \n", a, b, c, discr);
     if (discr < 0) 
         return -1;
@@ -37,8 +37,8 @@ double find_distance_with_sphere(Point vector, Sphere sphere)
         return (-1 * b) / (2*a);
     }
 
-    long long t1 = (-1 * b + sqrt(discr)) / (2*a);
-    long long t2 = (-1 * b - sqrt(discr)) / (2*a);
+    double t1 = (-1 * b + sqrt(discr)) / (2*a);
+    double t2 = (-1 * b - sqrt(discr)) / (2*a);
     if (t1 < 0 && t2 < 0) return -1;
     if (t1 < 0) return t2;
     if (t2 < 0) return t1;
@@ -47,6 +47,7 @@ double find_distance_with_sphere(Point vector, Sphere sphere)
     }
     return t2;
 }
+// break render/render.c:31 if (vector.x < 0 && vector.x > -0.1 && vector.y < 0 && vector.y > -0.1)
 
 double scalar(Point a, Point b) 
 {
