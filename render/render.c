@@ -20,13 +20,13 @@ Point find_point_on_view_window(int pixelX, int pixelY, int maxX, int maxY, View
     return point;
 }
 
-double find_distance_with_sphere(Point vector, Sphere sphere)
+double find_distance_with_sphere(Point vector, Sphere *sphere)
 {
     Point co;
-    co = negate(sphere.center);
+    co = negate(sphere->center); // 0x555555558bf0
     double a = scalar(vector, vector);
     double b = 2 * scalar(co, vector);
-    double c = scalar(co, co) - (sphere.radius * sphere.radius);
+    double c = scalar(co, co) - (sphere->radius * sphere->radius);
     double discr = b*b - 4*a*c;
     printf("%d %d %d %d \n", a, b, c, discr);
     if (discr < 0) 
