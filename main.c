@@ -7,9 +7,10 @@
 #include <float.h>
 #include <stdlib.h>
 
-Sphere* spheres;
+static Sphere* spheres;
+static int spheres_amount;
 static Point camera;
-static ViewWindow viewWindow;
+static ViewWindow view_window;
 
 void init_scene();
 
@@ -29,18 +30,16 @@ int main()
             foundColor.blue = 0;
             foundColor.green = 0;
             foundColor.red = 0;
-            double minDistance = DBL_MAX;
-            for (int s = 0; s < 1; s++)
+            double min_distance = DBL_MAX;
+            for (int s = 0; s < spheres_amount; s++)
             {
-                Sphere sphere = spheres[s]; // тут правильная копия
-                printf("%d", spheres[s].radius);
-                Point vector_to_point_on_window = find_point_on_view_window(i, j, WIDTH, HEIGHT, viewWindow);
-                double distance = find_distance_with_sphere(vector_to_point_on_window, spheres);
-                printf("%d \n", distance);
-                if (distance != -1 && distance < minDistance)
+                Sphere sphere = spheres[s];
+                Point vector_to_point_on_window = find_point_on_view_window(i, j, WIDTH, HEIGHT, view_window);
+                double distance = find_distance_with_sphere(vector_to_point_on_window, spheres+s);
+                if (distance != -1 && distance < min_distance)
                 {
-                    foundColor = spheres->color; 
-                    minDistance = distance;
+                    foundColor = (spheres+s)->color; 
+                    min_distance = distance;
                 }
             }
             draw_point(map_x(i), map_y(j), foundColor.red, foundColor.green, foundColor.blue);
@@ -53,29 +52,46 @@ int main()
 
 void init_scene()
 {
-    Sphere* sphere0 = malloc(sizeof(Sphere)); // 0x55555555b300
-    Point* center0 = malloc(sizeof(Point)); // 0x55555555ba10
-    Color* color0 = malloc(sizeof(Color)); // 0x55555555b940
-    center0->x = 0;
-    center0->y = 0;
-    center0->z = 3;
-    color0->red = 255;
-    color0->green = 0;
-    color0->blue = 0;
-    sphere0->color = *color0;
-    sphere0->center = *center0;
+    Sphere* ss = calloc(2, sizeof(Sphere)); 
+    spheres_amount = 2;
+    Sphere* sphere0 = malloc(sizeof(Sphere));
+    Point center0;
+    Color color0;
+    center0.x = 0;
+    center0.y = 0;
+    center0.z = 3;
+    color0.red = 255;
+    color0.green = 0;
+    color0.blue = 0;
+    sphere0->color = color0;
+    sphere0->center = center0;
     sphere0->radius = 1;
-    spheres = sphere0;
+    ss[0] = *sphere0;
+
+    sphere0 = malloc(sizeof(Sphere));
+    center0.x = 0;
+    center0.y = 1;
+    center0.z = 10;
+    color0.red = 0;
+    color0.green = 255;
+    color0.blue = 0;
+    sphere0->color = color0;
+    sphere0->center = center0;
+    sphere0->radius = 4;
+    ss[1] = *sphere0;
+
+    spheres = ss;
+
     camera.x = 0;
     camera.y = 0;
     camera.z = 0;
-    Point viewWindowCenter;
-    viewWindowCenter.x = 0;
-    viewWindowCenter.y = 0;
-    viewWindowCenter.z = 1;
-    viewWindow.center = viewWindowCenter; 
-    viewWindow.height = 4;
-    viewWindow.width = 4;
+    Point view_window_center;
+    view_window_center.x = 0;
+    view_window_center.y = 0;
+    view_window_center.z = 1;
+    view_window.center = view_window_center; 
+    view_window.height = 4;
+    view_window.width = 4;
 }
 
 int map_x(long x)

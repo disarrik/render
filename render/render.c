@@ -23,12 +23,11 @@ Point find_point_on_view_window(int pixelX, int pixelY, int maxX, int maxY, View
 double find_distance_with_sphere(Point vector, Sphere *sphere)
 {
     Point co;
-    co = negate(sphere->center); // 0x555555558bf0
+    co = negate(sphere->center);
     double a = scalar(vector, vector);
     double b = 2 * scalar(co, vector);
     double c = scalar(co, co) - (sphere->radius * sphere->radius);
     double discr = b*b - 4*a*c;
-    printf("%d %d %d %d \n", a, b, c, discr);
     if (discr < 0) 
         return -1;
     else if (discr == 0) {
