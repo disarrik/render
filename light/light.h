@@ -7,6 +7,7 @@ Color compute_color(
     Color begin_color, 
     Point normal, 
     Point position,
+    double specular,
     double ambient_intensity, 
     PointLight* point_lights, 
     int point_lights_amount,

@@ -28,3 +28,12 @@ Point vector_multiply(Point p, double c)
     result.z = p.z * c;
     return result;
 }
+
+Point negate(Point p)
+{
+    Point newP;
+    newP.x = -1 * p.x;
+    newP.y = -1 * p.y;
+    newP.z = -1 * p.z;
+    return newP;
+}

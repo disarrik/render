@@ -3,15 +3,6 @@
 #include <math.h>
 #include <stdio.h>
 
-Point negate(Point p)
-{
-    Point newP;
-    newP.x = -1 * p.x;
-    newP.y = -1 * p.y;
-    newP.z = -1 * p.z;
-    return newP;
-}
-
 Point find_point_on_view_window(int pixelX, int pixelY, int maxX, int maxY, ViewWindow viewWindow)
 {
     Point point;

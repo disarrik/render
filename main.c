@@ -25,7 +25,7 @@ int map_x(long x);
 
 int map_y(long y);
 
-Color count_light(Point position, Point normal, Color color);
+Color count_light(Point position, Point normal, Color color, double specular);
 
 int main() 
 {
@@ -57,7 +57,7 @@ int main()
             {
                 Point position = vector_multiply(vector_to_point_on_window, min_distance);
                 Point normal = subtract(position, found_sphere->center);
-                foundColor = count_light(position, normal, foundColor);
+                foundColor = count_light(position, normal, foundColor, found_sphere->specular);
             }
             draw_point(map_x(i), map_y(j), foundColor.red, foundColor.green, foundColor.blue);
         }
@@ -67,9 +67,9 @@ int main()
     return 0;
 }
 
-Color count_light(Point position, Point normal, Color color)
+Color count_light(Point position, Point normal, Color color, double specular)
 {
-    return compute_color(color, normal, position, ambient_light_intensity,
+    return compute_color(color, normal, position, specular, ambient_light_intensity,
         point_lights, point_lights_amount, direction_lights, direction_lights_amount);
 }
 
@@ -89,7 +89,7 @@ void init_scene()
     sphere0->color = color0;
     sphere0->center = center0;
     sphere0->radius = 1;
-    sphere0->specular = -1;
+    sphere0->specular = 1000000;
     ss[0] = *sphere0;
 
     sphere0 = malloc(sizeof(Sphere));
@@ -102,7 +102,7 @@ void init_scene()
     sphere0->color = color0;
     sphere0->center = center0;
     sphere0->radius = 4;
-    sphere0->specular = -1;
+    sphere0->specular = 10000;
     ss[1] = *sphere0;
 
     sphere0 = malloc(sizeof(Sphere));
@@ -115,7 +115,7 @@ void init_scene()
     sphere0->color = color0;
     sphere0->center = center0;
     sphere0->radius = 1000000;
-    sphere0->specular = 100;
+    sphere0->specular = 100000;
     ss[2] = *sphere0;
 
     spheres = ss;
@@ -133,7 +133,7 @@ void init_scene()
 
     direction_lights = calloc(1, sizeof(DirectionLight));
     DirectionLight direction_light0;
-    direction_light0.intensity = 2;
+    direction_light0.intensity = 0.9;
     direction_light0.vector.x = 1;
     direction_light0.vector.y = 0;
     direction_light0.vector.z = 0.5;
@@ -142,7 +142,7 @@ void init_scene()
 
     point_lights = calloc(1, sizeof(PointLight));
     PointLight point_light0;
-    point_light0.intensity = 3;
+    point_light0.intensity = 0.9;
     point_light0.position.x = 0;
     point_light0.position.y = 3;
     point_light0.position.z = 2;

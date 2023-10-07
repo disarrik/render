@@ -11,4 +11,6 @@ Point subtract(Point a, Point b);
 
 Point vector_multiply(Point p, double c);
 
+Point negate(Point p);
+
 #endif
