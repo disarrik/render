@@ -1,17 +1,7 @@
+#include "shapes.h"
+
 #ifndef __SCENE__
 #define __SCENE__
-
-typedef struct Point 
-{
-    double x;
-    double y;
-    double z;
-} Point;
-
-typedef struct Color
-{
-    unsigned short red, green, blue;
-} Color;
 
 typedef struct ColoredPoint
 {
@@ -37,5 +27,15 @@ typedef struct DirectionLight
     Point vector;
     double intensity;
 } DirectionLight;
+
+static double ambient_light_intensity = 0.5;
+static DirectionLight* direction_lights;
+static int direction_lights_amount;
+static PointLight* point_lights;
+static int point_lights_amount;
+static Point camera;
+static ViewWindow view_window;
+static Sphere* spheres;
+static int spheres_amount;
 
 #endif

@@ -1,6 +1,7 @@
 #include "render/render.h"
 #include "draw/draw.h"
 #include "scene/shapes.h"
+#include "scene/scene.h"
 #include "math/math.h"
 #include "light/light.h"
 #include <unistd.h>
@@ -8,16 +9,6 @@
 #include <stdio.h>
 #include <float.h>
 #include <stdlib.h>
-
-static double ambient_light_intensity = 0.5;
-static DirectionLight* direction_lights;
-static int direction_lights_amount;
-static PointLight* point_lights;
-static int point_lights_amount;
-static Sphere* spheres;
-static int spheres_amount;
-static Point camera;
-static ViewWindow view_window;
 
 void init_scene();
 
@@ -102,7 +93,7 @@ void init_scene()
     sphere0->color = color0;
     sphere0->center = center0;
     sphere0->radius = 4;
-    sphere0->specular = 10000;
+    sphere0->specular = 1000000;
     ss[1] = *sphere0;
 
     sphere0 = malloc(sizeof(Sphere));
