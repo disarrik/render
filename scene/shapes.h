@@ -8,6 +8,7 @@ typedef struct Sphere
     Point center;
     double radius;
     Color color;
+    double specular;
 } Sphere;
 
 

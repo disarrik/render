@@ -9,7 +9,7 @@
 #include <float.h>
 #include <stdlib.h>
 
-static double ambient_light_intensity = 1.5;
+static double ambient_light_intensity = 0.5;
 static DirectionLight* direction_lights;
 static int direction_lights_amount;
 static PointLight* point_lights;
@@ -75,13 +75,13 @@ Color count_light(Point position, Point normal, Color color)
 
 void init_scene()
 {
-    Sphere* ss = calloc(2, sizeof(Sphere)); 
-    spheres_amount = 2;
+    Sphere* ss = calloc(3, sizeof(Sphere)); 
+    spheres_amount = 3;
     Sphere* sphere0 = malloc(sizeof(Sphere));
     Point center0;
     Color color0;
-    center0.x = 0;
-    center0.y = 0;
+    center0.x = 1;
+    center0.y = -1;
     center0.z = 3;
     color0.red = 60;
     color0.green = 0;
@@ -89,6 +89,7 @@ void init_scene()
     sphere0->color = color0;
     sphere0->center = center0;
     sphere0->radius = 1;
+    sphere0->specular = -1;
     ss[0] = *sphere0;
 
     sphere0 = malloc(sizeof(Sphere));
@@ -101,7 +102,21 @@ void init_scene()
     sphere0->color = color0;
     sphere0->center = center0;
     sphere0->radius = 4;
+    sphere0->specular = -1;
     ss[1] = *sphere0;
+
+    sphere0 = malloc(sizeof(Sphere));
+    center0.x = 0;
+    center0.y = -1000000 - 1;
+    center0.z = 10;
+    color0.red = 0;
+    color0.green = 0;
+    color0.blue = 50;
+    sphere0->color = color0;
+    sphere0->center = center0;
+    sphere0->radius = 1000000;
+    sphere0->specular = 100;
+    ss[2] = *sphere0;
 
     spheres = ss;
 
@@ -125,7 +140,15 @@ void init_scene()
     direction_lights[0] = direction_light0;
     direction_lights_amount = 1;
 
-    point_lights_amount = 0;
+    point_lights = calloc(1, sizeof(PointLight));
+    PointLight point_light0;
+    point_light0.intensity = 3;
+    point_light0.position.x = 0;
+    point_light0.position.y = 3;
+    point_light0.position.z = 2;
+    point_lights[0] = point_light0;
+    point_lights_amount = 1;
+
 }
 
 int map_x(long x)
