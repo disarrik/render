@@ -26,4 +26,16 @@ typedef struct ViewWindow
     double width;
 } ViewWindow;
 
+typedef struct PointLight
+{
+    Point position;
+    double intensity;
+} PointLight;
+
+typedef struct DirectionLight
+{
+    Point vector;
+    double intensity;
+} DirectionLight;
+
 #endif

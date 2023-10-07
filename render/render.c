@@ -1,4 +1,5 @@
 #include "render.h"
+#include "../math/math.h"
 #include <math.h>
 #include <stdio.h>
 
@@ -45,10 +46,4 @@ double find_distance_with_sphere(Point vector, Sphere *sphere)
         return t1;
     }
     return t2;
-}
-// break render/render.c:31 if (vector.x < 0 && vector.x > -0.1 && vector.y < 0 && vector.y > -0.1)
-
-double scalar(Point a, Point b) 
-{
-    return a.x*b.x + a.y*b.y + a.z*b.z;
 }

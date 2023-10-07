@@ -1,12 +1,19 @@
 #include "render/render.h"
 #include "draw/draw.h"
 #include "scene/shapes.h"
+#include "math/math.h"
+#include "light/light.h"
 #include <unistd.h>
 #include <limits.h>
 #include <stdio.h>
 #include <float.h>
 #include <stdlib.h>
 
+static double ambient_light_intensity = 1.5;
+static DirectionLight* direction_lights;
+static int direction_lights_amount;
+static PointLight* point_lights;
+static int point_lights_amount;
 static Sphere* spheres;
 static int spheres_amount;
 static Point camera;
@@ -17,6 +24,8 @@ void init_scene();
 int map_x(long x);
 
 int map_y(long y);
+
+Color count_light(Point position, Point normal, Color color);
 
 int main() 
 {
@@ -31,23 +40,37 @@ int main()
             foundColor.green = 0;
             foundColor.red = 0;
             double min_distance = DBL_MAX;
+            Sphere* found_sphere = NULL;
+            Point vector_to_point_on_window = find_point_on_view_window(i, j, WIDTH, HEIGHT, view_window);
             for (int s = 0; s < spheres_amount; s++)
             {
                 Sphere sphere = spheres[s];
-                Point vector_to_point_on_window = find_point_on_view_window(i, j, WIDTH, HEIGHT, view_window);
                 double distance = find_distance_with_sphere(vector_to_point_on_window, spheres+s);
                 if (distance != -1 && distance < min_distance)
                 {
                     foundColor = (spheres+s)->color; 
                     min_distance = distance;
+                    found_sphere = spheres + s;
                 }
+            }
+            if (found_sphere != NULL)
+            {
+                Point position = vector_multiply(vector_to_point_on_window, min_distance);
+                Point normal = subtract(position, found_sphere->center);
+                foundColor = count_light(position, normal, foundColor);
             }
             draw_point(map_x(i), map_y(j), foundColor.red, foundColor.green, foundColor.blue);
         }
     }
-    sleep(10);
+    sleep(1000);
     close_window();
     return 0;
+}
+
+Color count_light(Point position, Point normal, Color color)
+{
+    return compute_color(color, normal, position, ambient_light_intensity,
+        point_lights, point_lights_amount, direction_lights, direction_lights_amount);
 }
 
 void init_scene()
@@ -60,7 +83,7 @@ void init_scene()
     center0.x = 0;
     center0.y = 0;
     center0.z = 3;
-    color0.red = 255;
+    color0.red = 60;
     color0.green = 0;
     color0.blue = 0;
     sphere0->color = color0;
@@ -73,7 +96,7 @@ void init_scene()
     center0.y = 1;
     center0.z = 10;
     color0.red = 0;
-    color0.green = 255;
+    color0.green = 50;
     color0.blue = 0;
     sphere0->color = color0;
     sphere0->center = center0;
@@ -92,6 +115,17 @@ void init_scene()
     view_window.center = view_window_center; 
     view_window.height = 4;
     view_window.width = 4;
+
+    direction_lights = calloc(1, sizeof(DirectionLight));
+    DirectionLight direction_light0;
+    direction_light0.intensity = 2;
+    direction_light0.vector.x = 1;
+    direction_light0.vector.y = 0;
+    direction_light0.vector.z = 0.5;
+    direction_lights[0] = direction_light0;
+    direction_lights_amount = 1;
+
+    point_lights_amount = 0;
 }
 
 int map_x(long x)
