@@ -12,12 +12,12 @@ Point find_point_on_view_window(int pixelX, int pixelY, int maxX, int maxY, View
     return point;
 }
 
-double find_distance_with_sphere(Point vector, Sphere *sphere)
+double find_distance_with_sphere(Point O, Point D, Sphere *sphere)
 {
     Point co;
-    co = negate(sphere->center);
-    double a = scalar(vector, vector);
-    double b = 2 * scalar(co, vector);
+    co = subtract(O, sphere->center);
+    double a = scalar(D, D);
+    double b = 2 * scalar(co, D);
     double c = scalar(co, co) - (sphere->radius * sphere->radius);
     double discr = b*b - 4*a*c;
     if (discr < 0) 

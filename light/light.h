@@ -9,9 +9,11 @@ Color compute_color(
     Point position,
     double specular,
     double ambient_intensity, 
-    PointLight* point_lights, 
+    PointLight *point_lights, 
     int point_lights_amount,
-    DirectionLight* direction_lights,
-    int direction_lights_amount);
+    DirectionLight *direction_lights,
+    int direction_lights_amount,
+    Sphere* spheres,
+    int spehres_amount);
 
 #endif

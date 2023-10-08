@@ -36,7 +36,7 @@ int main()
             for (int s = 0; s < spheres_amount; s++)
             {
                 Sphere sphere = spheres[s];
-                double distance = find_distance_with_sphere(vector_to_point_on_window, spheres+s);
+                double distance = find_distance_with_sphere(camera, vector_to_point_on_window, spheres+s);
                 if (distance != -1 && distance < min_distance)
                 {
                     foundColor = (spheres+s)->color; 
@@ -61,7 +61,7 @@ int main()
 Color count_light(Point position, Point normal, Color color, double specular)
 {
     return compute_color(color, normal, position, specular, ambient_light_intensity,
-        point_lights, point_lights_amount, direction_lights, direction_lights_amount);
+        point_lights, point_lights_amount, direction_lights, direction_lights_amount, spheres, spheres_amount);
 }
 
 void init_scene()
@@ -111,7 +111,7 @@ void init_scene()
 
     spheres = ss;
 
-    camera.x = 0;
+    camera.x = 1;
     camera.y = 0;
     camera.z = 0;
     Point view_window_center;
@@ -134,9 +134,9 @@ void init_scene()
     point_lights = calloc(1, sizeof(PointLight));
     PointLight point_light0;
     point_light0.intensity = 0.9;
-    point_light0.position.x = 0;
-    point_light0.position.y = 3;
-    point_light0.position.z = 2;
+    point_light0.position.x = 1;
+    point_light0.position.y = 10;
+    point_light0.position.z = 0;
     point_lights[0] = point_light0;
     point_lights_amount = 1;
 

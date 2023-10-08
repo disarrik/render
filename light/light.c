@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <math.h>
 #include "../math/math.h"
+#include "../shadow/shadow.h"
+#include <float.h>
 
 double get_intensity(Point light, double max_intensity_of_light, Point normal);
 
@@ -16,11 +18,17 @@ Color compute_color(
     PointLight *point_lights, 
     int point_lights_amount,
     DirectionLight *direction_lights,
-    int direction_lights_amount)
+    int direction_lights_amount,
+    Sphere* spheres,
+    int spehres_amount)
 {
     double result_intensity = ambient_intensity;
     for (int i = 0; i < direction_lights_amount; i++)
     {
+        if (have_object_infront(position, negate(direction_lights[i].vector), DBL_MAX, spheres, spehres_amount))
+        {
+            continue;
+        }
         result_intensity += get_intensity(direction_lights[i].vector, direction_lights[i].intensity, normal);
         if (specular != -1)
             result_intensity += get_intensity_for_specular(direction_lights[i].vector, position, normal, direction_lights[i].intensity, specular);
@@ -28,6 +36,10 @@ Color compute_color(
     for (int i = 0; i < point_lights_amount; i++)
     {
         Point vector = subtract(point_lights[i].position, position);
+        if (have_object_infront(position, negate(vector), vector_len(subtract(position, point_lights[i].position)), spheres, spehres_amount))
+        {
+            continue;
+        }
         result_intensity += get_intensity(vector, point_lights[i].intensity, normal);
         if (specular != -1)
             result_intensity += get_intensity_for_specular(vector, position, normal, point_lights[i].intensity, specular);
